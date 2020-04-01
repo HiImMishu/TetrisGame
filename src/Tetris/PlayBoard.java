@@ -1,5 +1,7 @@
 package Tetris;
 
+import jdk.jfr.consumer.RecordedThreadGroup;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ public class PlayBoard extends JComponent
     private static final int DEFAULT_WIDTH = 300;
     private static final int DEFAULT_HEIGHT = 560;
     private static final int SIZE = 20;
+    private static final int MAX_ROW = DEFAULT_WIDTH / SIZE;
 
     private Element current;
     private Element next;
@@ -54,8 +57,11 @@ int i = 10;
             g2.setColor(Color.DARK_GRAY);
             g2.draw(shape);
             g2.drawString(""+shape.getMinX(), 250, i);
+            if(!done.isEmpty())
+                g2.drawString(""+done.get(0).getMinX(), 200, i);
             i+=20;
         }
+
 
         for(Rectangle2D painted: done)
         {
@@ -104,6 +110,7 @@ int i = 10;
         }
         colision(current);
         repaint();
+        return;
     }
 
     public void moveLeft(ArrayList<Rectangle2D> r)
@@ -112,6 +119,17 @@ int i = 10;
         {
             if(shape.getMinX() <= 0)
                 return;
+        }
+
+        for(Rectangle2D shape: r)
+        {
+            for(Rectangle2D d: done)
+            {
+                if(d.getMaxX() == shape.getMinX() && d.getMinY() == shape.getMinY()) {
+                    colision(current);
+                    return;
+                }
+            }
         }
 
         for(Rectangle2D shape: r)
@@ -129,6 +147,17 @@ int i = 10;
         {
             if(shape.getMaxX() >= 300)
                 return;
+        }
+
+        for(Rectangle2D shape: r)
+        {
+            for(Rectangle2D d: done)
+            {
+                if(d.getMinX() == shape.getMaxX() && d.getMinY() == shape.getMinY()) {
+                    colision(current);
+                    return;
+                }
+            }
         }
 
         for(Rectangle2D shape: r)
@@ -156,7 +185,7 @@ int i = 10;
                 done.addAll(c.getShape());
                 current = next;
                 next = elementCreator.getRandomShape();
-                repaint();
+                checkRow();
                 return;
             }
         }
@@ -170,11 +199,58 @@ int i = 10;
                     done.addAll(c.getShape());
                     current = next;
                     next = elementCreator.getRandomShape();
-                    repaint();
+                    checkRow();
                     return;
                 }
             }
         }
+    }
+
+    public void checkRow()
+    {
+        int[] elements = new int[(DEFAULT_HEIGHT/SIZE)];
+        for(Rectangle2D d: done)
+        {
+            elements[(int)d.getMinY()/SIZE]++;
+        }
+
+        for(int i=0; i < DEFAULT_HEIGHT/SIZE; i++)
+        {
+            if(elements[i] == MAX_ROW)
+            {
+                removeRow(i);
+                return;
+            }
+        }
+    }
+
+    private void removeRow(int lvl)
+    {
+        ArrayList<Rectangle2D> row = new ArrayList<>();
+        for(Rectangle2D d: done)
+        {
+            if(d.getMinY()/SIZE == lvl)
+                row.add(d);
+        }
+        done.removeAll(row);
+        moveDoneDown();
+        checkRow();
+        return;
+    }
+
+    private void moveDoneDown()
+    {
+        for(Rectangle2D d: done)
+        {
+            if(d.getMaxY() < 560)
+            {
+                double x = d.getX() + SIZE;
+                double y = d.getY() + SIZE;
+                d.setRect(x, y, SIZE, SIZE);
+            }
+        }
+        repaint();
+        return;
     }
 
 }
