@@ -108,8 +108,8 @@ int i = 10;
             double x = shape.getX();
             shape.setRect(x, y, SIZE, SIZE);
         }
-        colision(current);
         repaint();
+        colision(current);
         return;
     }
 
@@ -233,18 +233,18 @@ int i = 10;
                 row.add(d);
         }
         done.removeAll(row);
-        moveDoneDown();
+        moveDoneDown(lvl);
         checkRow();
         return;
     }
 
-    private void moveDoneDown()
+    private void moveDoneDown(int lvl)
     {
         for(Rectangle2D d: done)
         {
-            if(d.getMaxY() < 560)
+            if(d.getMinY() < lvl * SIZE)
             {
-                double x = d.getX() + SIZE;
+                double x = d.getX();
                 double y = d.getY() + SIZE;
                 d.setRect(x, y, SIZE, SIZE);
             }
