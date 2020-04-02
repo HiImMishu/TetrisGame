@@ -62,6 +62,15 @@ public class TetroShape extends JPanel
     };
 
     private static final int SIZE = 20;
+    private static final Color[] colors = {
+            new Color(142, 175, 12),
+            new Color(239, 47, 162),
+            new Color(203, 231, 36),
+            new Color(255, 214, 0),
+            new Color(248, 92, 80),
+            new Color(255, 107, 0),
+            new Color(68, 0, 178)
+    };
 
     public int getElementSize()
     {
@@ -72,7 +81,9 @@ public class TetroShape extends JPanel
     {
         var random = new Random();
         int shapeFamily = random.nextInt(7);
-        return new Element(buildShape(shapeTemplate[shapeFamily][0]), shapeFamily);
+        Element e = new Element(buildShape(shapeTemplate[shapeFamily][0]), shapeFamily);
+        e.setElementColor(colors[shapeFamily]);
+        return e;
     }
 
     public Element rotateShape(Element rectangles)

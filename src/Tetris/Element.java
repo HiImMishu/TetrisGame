@@ -1,6 +1,7 @@
 package Tetris;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ public class Element extends JComponent {
     private ArrayList<Rectangle2D> rectangles;
     private int rotateState;
     private int elementShape;
+    private Color color;
 
     Element(ArrayList<Rectangle2D> a, int elementShape)
     {
@@ -31,9 +33,16 @@ public class Element extends JComponent {
         return elementShape;
     }
 
+    public Color getColor() { return color; }
+
     public void setRotateState(int rotateState)
     {
         this.rotateState = rotateState;
         this.rotateState %= 4;
+    }
+
+    public void setElementColor(Color color)
+    {
+        this.color = color;
     }
 }

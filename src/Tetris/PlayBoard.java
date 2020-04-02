@@ -43,25 +43,19 @@ public class PlayBoard extends JComponent
         amap.put("move.round", rotate);
     }
 
-
     public void paintComponent(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.CYAN);
         g2.fillRect(0,0,600,600);
-int i = 10;
+
         for(Rectangle2D shape: current.getShape())
         {
-            g2.setColor(Color.MAGENTA);
+            g2.setColor(current.getColor());
             g2.fill(shape);
             g2.setColor(Color.DARK_GRAY);
             g2.draw(shape);
-            g2.drawString(""+shape.getMinX(), 250, i);
-            if(!done.isEmpty())
-                g2.drawString(""+done.get(0).getMinX(), 200, i);
-            i+=20;
         }
-
 
         for(Rectangle2D painted: done)
         {
@@ -123,9 +117,8 @@ int i = 10;
 
         for(Rectangle2D shape: r)
         {
-            for(Rectangle2D d: done)
-            {
-                if(d.getMaxX() == shape.getMinX() && d.getMinY() == shape.getMinY()) {
+            for (Rectangle2D d : done) {
+                if (d.getMaxX() == shape.getMinX() && d.getMinY() == shape.getMinY()) {
                     colision(current);
                     return;
                 }
@@ -149,11 +142,9 @@ int i = 10;
                 return;
         }
 
-        for(Rectangle2D shape: r)
-        {
-            for(Rectangle2D d: done)
-            {
-                if(d.getMinX() == shape.getMaxX() && d.getMinY() == shape.getMinY()) {
+        for(Rectangle2D shape: r) {
+            for (Rectangle2D d : done) {
+                if (d.getMinX() == shape.getMaxX() && d.getMinY() == shape.getMinY()) {
                     colision(current);
                     return;
                 }
