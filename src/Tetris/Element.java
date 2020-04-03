@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class Element extends JComponent {
+public class Element extends JComponent implements Cloneable {
     private ArrayList<Rectangle2D> rectangles;
     private int rotateState;
     private int elementShape;
@@ -44,5 +44,19 @@ public class Element extends JComponent {
     public void setElementColor(Color color)
     {
         this.color = color;
+    }
+
+    public Element clone()
+    {
+        ArrayList<Rectangle2D> newRectangles = new ArrayList<>();
+        for(Rectangle2D r: rectangles)
+        {
+            newRectangles.add(new Rectangle2D.Double(r.getMinX(), r.getMaxY(), r.getWidth(), r.getHeight()));
+        }
+        Element e = new Element(newRectangles, elementShape);
+        e.setElementColor(color);
+        e.setRotateState(rotateState);
+
+        return e;
     }
 }

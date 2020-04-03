@@ -17,7 +17,7 @@ public class PlayBoard extends JComponent
 
     private Element current;
     private Element next;
-    private ArrayList<Rectangle2D> done;
+    private ArrayList<Element> done;
     private TetroShape elementCreator;
 
     PlayBoard()
@@ -25,7 +25,7 @@ public class PlayBoard extends JComponent
         elementCreator = new TetroShape();
         current = elementCreator.getRandomShape();
         next = elementCreator.getRandomShape();
-        done = new ArrayList<Rectangle2D>();
+        done = new ArrayList<Element>();
 
         var moveDown = new MoveAction("DOWN");
         var moveLeft = new MoveAction("LEFT");
@@ -57,12 +57,13 @@ public class PlayBoard extends JComponent
             g2.draw(shape);
         }
 
-        for(Rectangle2D painted: done)
-        {
-            g2.setColor(Color.RED);
-            g2.fill(painted);
-            g2.setColor(Color.DARK_GRAY);
-            g2.draw(painted);
+        for(Element e: done) {
+            for (Rectangle2D painted : e.getShape()) {
+                g2.setColor(e.getColor());
+                g2.fill(painted);
+                g2.setColor(Color.DARK_GRAY);
+                g2.draw(painted);
+            }
         }
 
     }
@@ -96,6 +97,11 @@ public class PlayBoard extends JComponent
 
     public void moveDown(ArrayList<Rectangle2D> r)
     {
+        if(collisionWithDone(current)){
+            repaint();
+            return;
+        }
+
         for(Rectangle2D shape: r)
         {
             double y = shape.getY()+SIZE;
@@ -103,11 +109,11 @@ public class PlayBoard extends JComponent
             shape.setRect(x, y, SIZE, SIZE);
         }
         repaint();
-        colision(current);
+        collision(current);
         return;
     }
 
-    public void moveLeft(ArrayList<Rectangle2D> r)
+    private void moveLeft(ArrayList<Rectangle2D> r)
     {
         for(Rectangle2D shape: r)
         {
@@ -115,12 +121,13 @@ public class PlayBoard extends JComponent
                 return;
         }
 
-        for(Rectangle2D shape: r)
-        {
-            for (Rectangle2D d : done) {
-                if (d.getMaxX() == shape.getMinX() && d.getMinY() == shape.getMinY()) {
-                    colision(current);
-                    return;
+        for(Rectangle2D shape: r) {
+            for (Element e : done) {
+                for (Rectangle2D d : e.getShape()) {
+                    if (d.getMaxX() == shape.getMinX() && d.getMinY() == shape.getMinY()) {
+                        collision(current);
+                        return;
+                    }
                 }
             }
         }
@@ -134,7 +141,7 @@ public class PlayBoard extends JComponent
         repaint();
     }
 
-    public void moveRight(ArrayList<Rectangle2D> r)
+    private void moveRight(ArrayList<Rectangle2D> r)
     {
         for(Rectangle2D shape: r)
         {
@@ -143,10 +150,12 @@ public class PlayBoard extends JComponent
         }
 
         for(Rectangle2D shape: r) {
-            for (Rectangle2D d : done) {
-                if (d.getMinX() == shape.getMaxX() && d.getMinY() == shape.getMinY()) {
-                    colision(current);
-                    return;
+            for(Element e: done) {
+                for (Rectangle2D d : e.getShape()) {
+                    if (d.getMinX() == shape.getMaxX() && d.getMinY() == shape.getMinY()) {
+                        collision(current);
+                        return;
+                    }
                 }
             }
         }
@@ -160,49 +169,76 @@ public class PlayBoard extends JComponent
         repaint();
     }
 
-    public void rotate()
+    private void rotate()
     {
-        current = elementCreator.rotateShape(current);
-        colision(current);
+        boolean collide = true;
+        Element rotated = elementCreator.rotateShape(current.clone());
+        for(Rectangle2D r: rotated.getShape())
+        {
+            if(r.getMinX() < 0 || r.getMaxX() > DEFAULT_WIDTH || r.getMaxY() >= DEFAULT_HEIGHT)
+                collide = false;
+
+            for(Element e: done)
+            {
+                for(Rectangle2D d: e.getShape())
+                {
+                    if (d.contains(r.getX(), r.getMaxY())) {
+                        collide = false;
+                    }
+                }
+            }
+        }
+        if(collide)
+            current = rotated;
         repaint();
     }
 
-    public void colision(Element c)
+    private void collision(Element c)
     {
         for(Rectangle2D shape: c.getShape())
         {
             if(shape.getMaxY() >= DEFAULT_HEIGHT)
             {
-                done.addAll(c.getShape());
+                Element tmp = new Element(c.getShape(), c.getShapeFamily());
+                done.add(tmp);
+                tmp.setElementColor(c.getColor().darker());
                 current = next;
                 next = elementCreator.getRandomShape();
                 checkRow();
                 return;
             }
         }
+        collisionWithDone(c);
+    }
 
+    private Boolean collisionWithDone(Element c)
+    {
         for(Rectangle2D shape: c.getShape())
         {
-            for(Rectangle2D flor: done)
-            {
-                if(flor.contains(shape.getX(), shape.getMaxY()))
-                {
-                    done.addAll(c.getShape());
-                    current = next;
-                    next = elementCreator.getRandomShape();
-                    checkRow();
-                    return;
+            for(Element e:done) {
+                for (Rectangle2D flor : e.getShape()) {
+                    if (flor.contains(shape.getX(), shape.getMaxY()+1)) {
+                        Element tmp = new Element(c.getShape(), c.getShapeFamily());
+                        done.add(tmp);
+                        tmp.setElementColor(c.getColor().darker());
+                        current = next;
+                        next = elementCreator.getRandomShape();
+                        checkRow();
+                        return true;
+                    }
                 }
             }
         }
+        return false;
     }
 
-    public void checkRow()
+    private void checkRow()
     {
         int[] elements = new int[(DEFAULT_HEIGHT/SIZE)];
-        for(Rectangle2D d: done)
-        {
-            elements[(int)d.getMinY()/SIZE]++;
+        for(Element e: done) {
+            for (Rectangle2D d : e.getShape()) {
+                elements[(int) d.getMinY() / SIZE]++;
+            }
         }
 
         for(int i=0; i < DEFAULT_HEIGHT/SIZE; i++)
@@ -218,12 +254,13 @@ public class PlayBoard extends JComponent
     private void removeRow(int lvl)
     {
         ArrayList<Rectangle2D> row = new ArrayList<>();
-        for(Rectangle2D d: done)
-        {
-            if(d.getMinY()/SIZE == lvl)
-                row.add(d);
+        for(Element e: done) {
+            for (Rectangle2D d : e.getShape()) {
+                if (d.getMinY() / SIZE == lvl)
+                    row.add(d);
+            }
+            e.getShape().removeAll(row);
         }
-        done.removeAll(row);
         moveDoneDown(lvl);
         checkRow();
         return;
@@ -231,13 +268,13 @@ public class PlayBoard extends JComponent
 
     private void moveDoneDown(int lvl)
     {
-        for(Rectangle2D d: done)
-        {
-            if(d.getMinY() < lvl * SIZE)
-            {
-                double x = d.getX();
-                double y = d.getY() + SIZE;
-                d.setRect(x, y, SIZE, SIZE);
+        for(Element e: done) {
+            for (Rectangle2D d : e.getShape()) {
+                if (d.getMinY() < lvl * SIZE) {
+                    double x = d.getX();
+                    double y = d.getY() + SIZE;
+                    d.setRect(x, y, SIZE, SIZE);
+                }
             }
         }
         repaint();

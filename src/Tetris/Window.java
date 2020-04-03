@@ -11,6 +11,7 @@ public class Window extends JFrame
     public Window()
     {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        setLocationRelativeTo(null);
         setTitle("Tetris");
         setResizable(false);
 

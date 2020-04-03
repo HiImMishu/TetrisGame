@@ -97,7 +97,6 @@ public class TetroShape extends JPanel
         double y = rectangles.getShape().get(0).getY();
         for(Rectangle2D shape: rectangles.getShape())
         {
-
             double newX = x + SIZE * shapeTemplate[family][newRotate][i].getX();
             double newY = y + SIZE * shapeTemplate[family][newRotate][i].getY();
             shape.setRect(newX, newY, SIZE, SIZE);
@@ -111,7 +110,7 @@ public class TetroShape extends JPanel
         ArrayList<Rectangle2D> rectangles = new ArrayList<>();
         for(int i=0; i<4; i++)
         {
-            rectangles.add(new Rectangle2D.Double(s[i].getX()*SIZE, s[i].getY()*SIZE, SIZE, SIZE));
+            rectangles.add(new Rectangle2D.Double(s[i].getX()*SIZE + 120, s[i].getY()*SIZE, SIZE, SIZE));
         }
         return rectangles;
     }
