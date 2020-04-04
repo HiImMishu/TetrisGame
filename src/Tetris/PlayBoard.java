@@ -1,7 +1,5 @@
 package Tetris;
 
-import jdk.jfr.consumer.RecordedThreadGroup;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,13 +17,17 @@ public class PlayBoard extends JComponent
     private Element next;
     private ArrayList<Element> done;
     private TetroShape elementCreator;
+    private ScoreSystem scoreSystem;
+    private NextElementPanel nextElementPanel;
 
-    PlayBoard()
+    PlayBoard(ScoreSystem scoreSystem)
     {
         elementCreator = new TetroShape();
+        this.scoreSystem = scoreSystem;
         current = elementCreator.getRandomShape();
         next = elementCreator.getRandomShape();
         done = new ArrayList<Element>();
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         var moveDown = new MoveAction("DOWN");
         var moveLeft = new MoveAction("LEFT");
@@ -45,9 +47,8 @@ public class PlayBoard extends JComponent
 
     public void paintComponent(Graphics g)
     {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.CYAN);
-        g2.fillRect(0,0,600,600);
 
         for(Rectangle2D shape: current.getShape())
         {
@@ -85,7 +86,7 @@ public class PlayBoard extends JComponent
         public void actionPerformed(ActionEvent event)
         {
             if(direction.compareTo("DOWN") == 0)
-                moveDown(current.getShape());
+                moveDown();
             else if(direction.compareTo("LEFT") == 0)
                 moveLeft(current.getShape());
             else if(direction.compareTo("RIGHT") == 0)
@@ -95,14 +96,14 @@ public class PlayBoard extends JComponent
         }
     }
 
-    public void moveDown(ArrayList<Rectangle2D> r)
+    public void moveDown()
     {
         if(collisionWithDone(current)){
             repaint();
             return;
         }
 
-        for(Rectangle2D shape: r)
+        for(Rectangle2D shape: current.getShape())
         {
             double y = shape.getY()+SIZE;
             double x = shape.getX();
@@ -202,8 +203,10 @@ public class PlayBoard extends JComponent
                 Element tmp = new Element(c.getShape(), c.getShapeFamily());
                 done.add(tmp);
                 tmp.setElementColor(c.getColor().darker());
-                current = next;
+                current = next.clone();
                 next = elementCreator.getRandomShape();
+                scoreSystem.setScore(10);
+                nextElementPanel.repaint();
                 checkRow();
                 return;
             }
@@ -221,9 +224,11 @@ public class PlayBoard extends JComponent
                         Element tmp = new Element(c.getShape(), c.getShapeFamily());
                         done.add(tmp);
                         tmp.setElementColor(c.getColor().darker());
-                        current = next;
+                        current = next.clone();
                         next = elementCreator.getRandomShape();
                         checkRow();
+                        scoreSystem.setScore(10);
+                        nextElementPanel.repaint();
                         return true;
                     }
                 }
@@ -262,6 +267,7 @@ public class PlayBoard extends JComponent
             e.getShape().removeAll(row);
         }
         moveDoneDown(lvl);
+        scoreSystem.setScore(100);
         checkRow();
         return;
     }
@@ -279,6 +285,16 @@ public class PlayBoard extends JComponent
         }
         repaint();
         return;
+    }
+
+    public Element getNext()
+    {
+        return this.next.clone();
+    }
+
+    public void setNextElementPanel(NextElementPanel nextElementPanel)
+    {
+        this.nextElementPanel = nextElementPanel;
     }
 
 }

@@ -8,9 +8,7 @@ public class test {
     {
         EventQueue.invokeLater(() ->
         {
-            var window = new Window();
-            window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            window.setVisible(true);
+            new GameManager();
         });
     }
 }
