@@ -11,6 +11,7 @@ public class GameManager {
     private ScoreSystem scoreSystem;
     private NextElementPanel nextElementPanel;
     private ScoreView scoreView;
+    private ControlsView controlsView;
     private int interval;
 
     GameManager()
@@ -20,6 +21,7 @@ public class GameManager {
         this.playBoard = new PlayBoard(scoreSystem);
         this.nextElementPanel = new NextElementPanel(playBoard);
         this.scoreView = new ScoreView(scoreSystem);
+        this.controlsView = new ControlsView();
         this.scoreSystem.setScoreView(scoreView);
         this.playBoard.setNextElementPanel(nextElementPanel);
         this.interval = 1000;
@@ -29,6 +31,7 @@ public class GameManager {
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
         sidePanel.add(nextElementPanel);
         sidePanel.add(scoreView);
+        sidePanel.add(controlsView);
 
         window.add(playBoard, BorderLayout.WEST);
         window.add(sidePanel, BorderLayout.EAST);
@@ -47,9 +50,8 @@ public class GameManager {
 
     ActionListener listener = event -> {
         playBoard.moveDown();
-        if(scoreSystem.getLvl() % 10 == 0)
-            this.interval -= 900;
+        if(scoreSystem.getLvl() % 1 == 0 && interval > 100)
+            this.interval -= 100;
         timer.setDelay(interval);
-        timer.start();
     };
 }

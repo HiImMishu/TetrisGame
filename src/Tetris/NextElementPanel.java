@@ -25,7 +25,7 @@ public class NextElementPanel extends JPanel {
         Element next = playBoard.getNext();
         for(Rectangle2D r: next.getShape())
         {
-            r.setRect(r.getMinX()-50, r.getMinY()+20, r.getWidth(), r.getHeight());
+            r.setRect(r.getMinX()-50, r.getMinY()+40, r.getWidth(), r.getHeight());
             g.setColor(next.getColor());
             g.fill(r);
             g.setColor(Color.DARK_GRAY);
