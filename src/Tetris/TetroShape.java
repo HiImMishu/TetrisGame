@@ -61,7 +61,7 @@ public class TetroShape extends JPanel
         }
     };
 
-    private static final int SIZE = 20;
+    private static final int SIZE = 30;
     private static final Color[] colors = {
             new Color(142, 175, 12),
             new Color(239, 47, 162),

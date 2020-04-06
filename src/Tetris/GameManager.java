@@ -50,8 +50,8 @@ public class GameManager {
 
     ActionListener listener = event -> {
         playBoard.moveDown();
-        if(scoreSystem.getLvl() % 1 == 0 && interval > 100)
-            this.interval -= 100;
+        if(scoreSystem.getLvl() % 10 == 0 && interval > 100)
+            this.interval -= 50;
         timer.setDelay(interval);
     };
 }

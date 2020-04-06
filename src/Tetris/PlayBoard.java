@@ -1,16 +1,17 @@
 package Tetris;
 
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class PlayBoard extends JComponent
+public class PlayBoard extends JPanel
 {
     private static final int DEFAULT_WIDTH = 300;
-    private static final int DEFAULT_HEIGHT = 560;
-    private static final int SIZE = 20;
+    private static final int DEFAULT_HEIGHT = 600;
+    private static final int SIZE = 30;
     private static final int MAX_ROW = DEFAULT_WIDTH / SIZE;
 
     private Element current;
@@ -49,6 +50,8 @@ public class PlayBoard extends JComponent
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        Image background = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\bg3.png").getImage();
+        g2.drawImage(background, 0, 0, null);
 
         for(Rectangle2D shape: current.getShape())
         {
@@ -56,6 +59,7 @@ public class PlayBoard extends JComponent
             g2.fill(shape);
             g2.setColor(Color.DARK_GRAY);
             g2.draw(shape);
+            g2.setColor(Color.WHITE);
         }
 
         for(Element e: done) {
@@ -146,7 +150,7 @@ public class PlayBoard extends JComponent
     {
         for(Rectangle2D shape: r)
         {
-            if(shape.getMaxX() >= 300)
+            if(shape.getMaxX() >= DEFAULT_WIDTH)
                 return;
         }
 

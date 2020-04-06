@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class ScoreView extends JPanel {
     private static final int DEFAULT_WIDTH = 200;
-    private static final int DEFAULT_HEIGHT = 140;
+    private static final int DEFAULT_HEIGHT = 200;
     private ScoreSystem scoreSystem;
 
     ScoreView(ScoreSystem scoreSystem)

@@ -51,7 +51,7 @@ public class Element extends JComponent implements Cloneable {
         ArrayList<Rectangle2D> newRectangles = new ArrayList<>();
         for(Rectangle2D r: rectangles)
         {
-            newRectangles.add(new Rectangle2D.Double(r.getMinX(), r.getMaxY(), r.getWidth(), r.getHeight()));
+            newRectangles.add(new Rectangle2D.Double(r.getMinX(), r.getY(), r.getWidth(), r.getHeight()));
         }
         Element e = new Element(newRectangles, elementShape);
         e.setElementColor(color);
