@@ -1,12 +1,7 @@
 package Tetris;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import static java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR;
 
 public class ControlsView extends JPanel {
     private static final int DEFAULT_WIDTH = 200;
@@ -14,91 +9,67 @@ public class ControlsView extends JPanel {
     private JButton pause;
     private JButton play;
     private JButton restart;
+    private AutoFall autoFall;
+    private PlayBoard playBoard;
 
-    ControlsView()
-    {
-        ImageIcon playIcon;
-        try{
-            BufferedImage image = ImageIO.read(new File("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\play.png"));
-            image = getScaledInstance(image, 50, 50, VALUE_INTERPOLATION_BILINEAR, true);
-            playIcon = new ImageIcon(image);
-            this.pause = new JButton(playIcon);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    ControlsView(AutoFall autoFall, PlayBoard playBoard) {
+        this.autoFall = autoFall;
+        this.playBoard = playBoard;
 
-        this.play = new JButton("PLA");
-        this.restart = new JButton("RES");
-        //pause.setBackground(Color.BLACK);
-        pause.setPreferredSize(new Dimension(50, 50));
+        ImageIcon playIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\play.png");
+        Image playImg = playIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        this.play = new JButton(new ImageIcon(playImg));
+        play.setPreferredSize(new Dimension(55 ,55));
+        play.setMargin(new Insets(110, 110, 110, 110));
+        this.play.addActionListener(event -> {
+            autoFall.play();
+            playBoard.play();
+        });
+
+        ImageIcon pauseIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\pause.png");
+        Image pauseImg = pauseIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        this.pause = new JButton(new ImageIcon(pauseImg));
+        pause.setPreferredSize(new Dimension(55 ,55));
+        this.pause.addActionListener(event -> {
+            autoFall.pause();
+            playBoard.pause();
+        });
+
+        ImageIcon restartIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\restart.png");
+        Image restartImage = restartIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        this.restart = new JButton(new ImageIcon(restartImage));
+        restart.setPreferredSize(new Dimension(55 ,55));
+        this.restart.addActionListener(event -> {
+            playBoard.reset();
+        });
 
         this.setLayout(new GridBagLayout());
-        add(pause, new GridBagConstraints());
-        add(play, new GridBagConstraints());
-        add(restart, new GridBagConstraints());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.PAGE_START;
+        constraints.weightx = 10;
+        constraints.weighty = 10;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        add(pause, constraints);
+        constraints.gridx = 3;
+        constraints.gridy = 1;
+        add(play, constraints);
+        constraints.gridx = 4;
+        constraints.gridy = 1;
+        add(restart, constraints);
     }
 
-    public void paintComponent(Graphics gn)
-    {
+    public void paintComponent(Graphics gn) {
         super.paintComponent(gn);
         Graphics2D g = (Graphics2D) gn;
-        setBackground(Color.PINK);
+        setBackground(Color.DARK_GRAY);
+
+        Image background = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\ar.png").getImage();
+        g.drawImage(background, 0, 0, null);
     }
 
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
-
-    public BufferedImage getScaledInstance(BufferedImage img,
-                                           int targetWidth,
-                                           int targetHeight,
-                                           Object hint,
-                                           boolean higherQuality)
-    {
-        int type = (img.getTransparency() == Transparency.OPAQUE) ?
-                BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-        BufferedImage ret = (BufferedImage)img;
-        int w, h;
-        if (higherQuality) {
-            // Use multi-step technique: start with original size, then
-            // scale down in multiple passes with drawImage()
-            // until the target size is reached
-            w = img.getWidth();
-            h = img.getHeight();
-        } else {
-            // Use one-step technique: scale directly from original
-            // size to target size with a single drawImage() call
-            w = targetWidth;
-            h = targetHeight;
-        }
-
-        do {
-            if (higherQuality && w > targetWidth) {
-                w /= 2;
-                if (w < targetWidth) {
-                    w = targetWidth;
-                }
-            }
-
-            if (higherQuality && h > targetHeight) {
-                h /= 2;
-                if (h < targetHeight) {
-                    h = targetHeight;
-                }
-            }
-
-            BufferedImage tmp = new BufferedImage(w, h, type);
-            Graphics2D g2 = tmp.createGraphics();
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-            g2.drawImage(ret, 0, 0, w, h, null);
-            g2.dispose();
-
-            ret = tmp;
-        } while (w != targetWidth || h != targetHeight);
-
-        return ret;
-    }
-
 
 }

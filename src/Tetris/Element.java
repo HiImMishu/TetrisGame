@@ -11,46 +11,40 @@ public class Element extends JComponent implements Cloneable {
     private int elementShape;
     private Color color;
 
-    Element(ArrayList<Rectangle2D> a, int elementShape)
-    {
+    Element(ArrayList<Rectangle2D> a, int elementShape) {
         this.rectangles = a;
         this.elementShape = elementShape;
         this.rotateState = 0;
     }
 
-    public ArrayList<Rectangle2D> getShape()
-    {
+    public ArrayList<Rectangle2D> getShape() {
         return rectangles;
     }
 
-    public int getRotateState()
-    {
+    public int getRotateState() {
         return rotateState;
     }
 
-    public int getShapeFamily()
-    {
+    public int getShapeFamily() {
         return elementShape;
     }
 
-    public Color getColor() { return color; }
+    public Color getColor() {
+        return color;
+    }
 
-    public void setRotateState(int rotateState)
-    {
+    public void setRotateState(int rotateState) {
         this.rotateState = rotateState;
         this.rotateState %= 4;
     }
 
-    public void setElementColor(Color color)
-    {
+    public void setElementColor(Color color) {
         this.color = color;
     }
 
-    public Element clone()
-    {
+    public Element clone() {
         ArrayList<Rectangle2D> newRectangles = new ArrayList<>();
-        for(Rectangle2D r: rectangles)
-        {
+        for (Rectangle2D r : rectangles) {
             newRectangles.add(new Rectangle2D.Double(r.getMinX(), r.getY(), r.getWidth(), r.getHeight()));
         }
         Element e = new Element(newRectangles, elementShape);
