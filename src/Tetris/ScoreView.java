@@ -49,7 +49,6 @@ public class ScoreView extends JPanel {
         g.setColor(new Color(194, 58, 148));
         g.drawString(hsc,(int) (100-bounds.getWidth()/2),170);
 
-
     }
 
     public Dimension getPreferredSize() {
