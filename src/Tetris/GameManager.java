@@ -1,7 +1,8 @@
 package Tetris;
 
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class GameManager {
     private Window window;
@@ -11,6 +12,8 @@ public class GameManager {
     private ScoreView scoreView;
     private ControlsView controlsView;
     private AutoFall autoFall;
+    private MenuPanel menuPanel;
+    private boolean visible = false;
 
     GameManager()
     {
@@ -30,7 +33,7 @@ public class GameManager {
         sidePanel.add(scoreView);
         sidePanel.add(controlsView);
 
-        MenuPanel menuPanel = new MenuPanel();
+        this.menuPanel = new MenuPanel();
         JLayeredPane layeredPane = new JLayeredPane();
         playBoard.setBounds(0,0,300, 600);
         sidePanel.setBounds(300, 0, 200, 600);
@@ -39,5 +42,23 @@ public class GameManager {
         layeredPane.add(sidePanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(menuPanel, JLayeredPane.POPUP_LAYER);
         window.add(layeredPane);
+
+        ToggleAction toggleMenu = new ToggleAction(menuPanel);
+        InputMap imap = layeredPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        imap.put(KeyStroke.getKeyStroke("Q"), "toggle.menu");
+        ActionMap amap = layeredPane.getActionMap();
+        amap.put("toggle.menu", toggleMenu);
+    }
+
+    private class ToggleAction extends AbstractAction {
+        private MenuPanel menuPanel;
+
+        ToggleAction(MenuPanel menuPanel) {
+            this.menuPanel = menuPanel;
+        }
+        public void actionPerformed(ActionEvent event) {
+            visible = !visible;
+            menuPanel.setVisible(visible);
+        }
     }
 }

@@ -14,6 +14,5 @@ public class Window extends JFrame {
         setVisible(true);
         setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setLocationRelativeTo(null);
-
     }
 }
