@@ -11,6 +11,7 @@ public class ControlsView extends JPanel {
     private JButton restart;
     private AutoFall autoFall;
     private PlayBoard playBoard;
+    private boolean active = true;
 
     ControlsView(AutoFall autoFall, PlayBoard playBoard) {
         this.autoFall = autoFall;
@@ -22,8 +23,10 @@ public class ControlsView extends JPanel {
         play.setPreferredSize(new Dimension(55 ,55));
         play.setMargin(new Insets(110, 110, 110, 110));
         this.play.addActionListener(event -> {
-            autoFall.play();
-            playBoard.play();
+            if (active) {
+                autoFall.play();
+                playBoard.play();
+            }
         });
 
         ImageIcon pauseIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\pause.png");
@@ -31,8 +34,10 @@ public class ControlsView extends JPanel {
         this.pause = new JButton(new ImageIcon(pauseImg));
         pause.setPreferredSize(new Dimension(55 ,55));
         this.pause.addActionListener(event -> {
-            autoFall.pause();
-            playBoard.pause();
+            if (active) {
+                autoFall.pause();
+                playBoard.pause();
+            }
         });
 
         ImageIcon restartIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\restart.png");
@@ -40,7 +45,8 @@ public class ControlsView extends JPanel {
         this.restart = new JButton(new ImageIcon(restartImage));
         restart.setPreferredSize(new Dimension(55 ,55));
         this.restart.addActionListener(event -> {
-            playBoard.reset();
+            if (active)
+                playBoard.reset();
         });
 
         this.setLayout(new GridBagLayout());
@@ -72,4 +78,7 @@ public class ControlsView extends JPanel {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

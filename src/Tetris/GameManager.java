@@ -12,20 +12,25 @@ public class GameManager {
     private ControlsView controlsView;
     private AutoFall autoFall;
     private MenuPanel menuPanel;
+    private GameOverView gameOverView;
+    private boolean activeState = true;
 
     GameManager()
     {
         this.window = new Window();
         this.scoreSystem = new ScoreSystem();
-        this.playBoard = new PlayBoard(scoreSystem);
+        this.playBoard = new PlayBoard(scoreSystem, this);
         this.nextElementPanel = new NextElementPanel(playBoard);
         this.scoreView = new ScoreView(scoreSystem);
         this.autoFall = new AutoFall(playBoard, scoreSystem);
+        autoFall.start();
         this.scoreSystem.setScoreView(scoreView);
         this.playBoard.setNextElementPanel(nextElementPanel);
         this.controlsView = new ControlsView(autoFall, playBoard);
         this.menuPanel = new MenuPanel(playBoard, autoFall);
+        this.gameOverView = new GameOverView(this);
         menuPanel.setGameManager(this);
+        window.setGlassPane(gameOverView);
 
         JPanel sidePanel = new JPanel();
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
@@ -37,6 +42,7 @@ public class GameManager {
         playBoard.setBounds(0,0,300, 600);
         sidePanel.setBounds(300, 0, 200, 600);
         menuPanel.setBounds(0,0,500,600);
+        gameOverView.setBounds(0, 0, 500, 600);
         layeredPane.add(playBoard, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(sidePanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(menuPanel, JLayeredPane.POPUP_LAYER);
@@ -56,11 +62,28 @@ public class GameManager {
             this.menuPanel = menuPanel;
         }
         public void actionPerformed(ActionEvent event) {
-            menuPanel.setMenuVisibility();
+            if (activeState)
+                menuPanel.setMenuVisibility();
         }
     }
 
     public void closeGame() {
         System.exit(0);
+    }
+
+    public void gameOver() {
+        autoFall.pause();
+        gameOverView.setVisible(true);
+        playBoard.repaint();
+        controlsView.setActive(false);
+        activeState = false;
+    }
+
+    public void resume() {
+        activeState = true;
+        menuPanel.setMenuVisibility();
+        playBoard.reset();
+        controlsView.setActive(true);
+        autoFall.setInterval(1000);
     }
 }

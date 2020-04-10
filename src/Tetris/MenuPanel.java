@@ -1,13 +1,12 @@
 package Tetris;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class MenuPanel extends JPanel {
     private int DEFAULT_WIDTH = 500;
     private int DEFAULT_HEIGHT = 600;
-    private boolean menuVisibility = false;
+    private boolean menuVisibility = true;
     private AutoFall autoFall;
     private PlayBoard playBoard;
     private GameManager gameManager;
@@ -28,8 +27,6 @@ public class MenuPanel extends JPanel {
         play.setPreferredSize(new Dimension(180, 50));
         play.setFont(new Font("SansSerif", Font.ITALIC + Font.BOLD, 16));
         play.addActionListener(event -> {
-            playBoard.play();
-            autoFall.play();
             setMenuVisibility();
         });
 

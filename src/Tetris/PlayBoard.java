@@ -19,8 +19,10 @@ public class PlayBoard extends JPanel {
     private TetroShape elementCreator;
     private ScoreSystem scoreSystem;
     private NextElementPanel nextElementPanel;
+    private GameManager gameManager;
 
-    PlayBoard(ScoreSystem scoreSystem) {
+    PlayBoard(ScoreSystem scoreSystem, GameManager gameManager) {
+        this.gameManager = gameManager;
         state = false;
         elementCreator = new TetroShape();
         this.scoreSystem = scoreSystem;
@@ -96,7 +98,7 @@ public class PlayBoard extends JPanel {
     public void moveDown() {
         if(!state) return;
         if (collisionWithDone(current)) {
-            repaint();
+            gameOver();
             return;
         }
 
@@ -266,6 +268,11 @@ public class PlayBoard extends JPanel {
         return;
     }
 
+    private void gameOver() {
+        gameManager.gameOver();
+        pause();
+    }
+
     public void play() {
         state = true;
     }
@@ -279,6 +286,7 @@ public class PlayBoard extends JPanel {
         done.clear();
         current = next.clone();
         next = elementCreator.getRandomShape();
+        nextElementPanel.repaint();
         repaint();
     }
 

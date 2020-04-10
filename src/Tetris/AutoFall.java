@@ -10,6 +10,7 @@ public class AutoFall extends Thread {
     private Timer timer;
     private PlayBoard playBoard;
     private ScoreSystem scoreSystem;
+    private int checkPoint = 5;
 
     AutoFall(PlayBoard playBoard, ScoreSystem scoreSystem)
     {
@@ -18,15 +19,25 @@ public class AutoFall extends Thread {
         this.interval = 1000;
         this.level = 0;
         this.state = false;
-        this.timer = new Timer(interval, listener);
-        timer.start();
     }
 
     ActionListener listener = event -> {
         if(state) {
+            if(scoreSystem.getLvl() >= checkPoint) {
+                checkPoint += 5;
+                if (interval > 100)
+                    interval -= 50;
+                timer.setDelay(interval);
+            }
             playBoard.moveDown();
         }
     };
+
+    @Override
+    public void run() {
+        this.timer = new Timer(interval, listener);
+        timer.start();
+    }
 
     public void play()
     {
@@ -36,5 +47,10 @@ public class AutoFall extends Thread {
     public void pause()
     {
         state = false;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+        timer.setDelay(interval);
     }
 }

@@ -5,6 +5,7 @@ public class ScoreSystem {
     private int score;
     private int lvl;
     private ScoreView scoreView;
+    private int lvlCheckpoint = 100;
 
     ScoreSystem() {
         highScore = 0;
@@ -27,8 +28,10 @@ public class ScoreSystem {
 
     public void setScore(int score) {
         this.score += score;
-        if (this.score % 100 == 0)
+        if (this.score >= lvlCheckpoint) {
             setLvl(1);
+            lvlCheckpoint += 100;
+        }
         setHighScore(this.score);
         this.scoreView.repaint();
     }
