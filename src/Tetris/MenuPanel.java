@@ -7,10 +7,16 @@ import java.awt.*;
 public class MenuPanel extends JPanel {
     private int DEFAULT_WIDTH = 500;
     private int DEFAULT_HEIGHT = 600;
+    private boolean menuVisibility = false;
+    private AutoFall autoFall;
+    private PlayBoard playBoard;
+    private GameManager gameManager;
 
-    MenuPanel() {
+    MenuPanel(PlayBoard playBoard, AutoFall autoFall) {
+        this.autoFall = autoFall;
+        this.playBoard = playBoard;
+
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -21,6 +27,11 @@ public class MenuPanel extends JPanel {
         JButton play = new JButton("PLAY");
         play.setPreferredSize(new Dimension(180, 50));
         play.setFont(new Font("SansSerif", Font.ITALIC + Font.BOLD, 16));
+        play.addActionListener(event -> {
+            playBoard.play();
+            autoFall.play();
+            setMenuVisibility();
+        });
 
         JButton highScores = new JButton("HIGH SCORES");
         highScores.setPreferredSize(new Dimension(180, 50));
@@ -29,6 +40,9 @@ public class MenuPanel extends JPanel {
         JButton quit = new JButton("EXIT");
         quit.setPreferredSize(new Dimension(180, 50));
         quit.setFont(new Font("SansSerif", Font.ITALIC + Font.BOLD, 16));
+        quit.addActionListener(event -> {
+            gameManager.closeGame();
+        });
 
         add(play, gbc);
         add(highScores, gbc);
@@ -46,6 +60,23 @@ public class MenuPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_WIDTH);
+    }
+
+    public void setMenuVisibility() {
+        menuVisibility = !menuVisibility;
+        if(menuVisibility) {
+            autoFall.pause();
+            playBoard.pause();
+        }
+        else {
+            autoFall.play();
+            playBoard.play();
+        }
+        setVisible(menuVisibility);
+    }
+
+    public void setGameManager(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
 }

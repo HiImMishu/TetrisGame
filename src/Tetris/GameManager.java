@@ -1,7 +1,6 @@
 package Tetris;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class GameManager {
@@ -13,7 +12,6 @@ public class GameManager {
     private ControlsView controlsView;
     private AutoFall autoFall;
     private MenuPanel menuPanel;
-    private boolean visible = false;
 
     GameManager()
     {
@@ -26,6 +24,8 @@ public class GameManager {
         this.scoreSystem.setScoreView(scoreView);
         this.playBoard.setNextElementPanel(nextElementPanel);
         this.controlsView = new ControlsView(autoFall, playBoard);
+        this.menuPanel = new MenuPanel(playBoard, autoFall);
+        menuPanel.setGameManager(this);
 
         JPanel sidePanel = new JPanel();
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
@@ -33,7 +33,6 @@ public class GameManager {
         sidePanel.add(scoreView);
         sidePanel.add(controlsView);
 
-        this.menuPanel = new MenuPanel();
         JLayeredPane layeredPane = new JLayeredPane();
         playBoard.setBounds(0,0,300, 600);
         sidePanel.setBounds(300, 0, 200, 600);
@@ -45,7 +44,7 @@ public class GameManager {
 
         ToggleAction toggleMenu = new ToggleAction(menuPanel);
         InputMap imap = layeredPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        imap.put(KeyStroke.getKeyStroke("Q"), "toggle.menu");
+        imap.put(KeyStroke.getKeyStroke("ESCAPE"), "toggle.menu");
         ActionMap amap = layeredPane.getActionMap();
         amap.put("toggle.menu", toggleMenu);
     }
@@ -57,8 +56,11 @@ public class GameManager {
             this.menuPanel = menuPanel;
         }
         public void actionPerformed(ActionEvent event) {
-            visible = !visible;
-            menuPanel.setVisible(visible);
+            menuPanel.setMenuVisibility();
         }
+    }
+
+    public void closeGame() {
+        System.exit(0);
     }
 }
