@@ -28,7 +28,7 @@ public class GameManager {
         this.playBoard.setNextElementPanel(nextElementPanel);
         this.controlsView = new ControlsView(autoFall, playBoard);
         this.menuPanel = new MenuPanel(playBoard, autoFall);
-        this.gameOverView = new GameOverView(this);
+        this.gameOverView = new GameOverView(this, scoreSystem);
         menuPanel.setGameManager(this);
         window.setGlassPane(gameOverView);
 
@@ -77,6 +77,7 @@ public class GameManager {
         playBoard.repaint();
         controlsView.setActive(false);
         activeState = false;
+        DbConnection.saveHighestScore(scoreSystem.getHighScore());
     }
 
     public void resume() {

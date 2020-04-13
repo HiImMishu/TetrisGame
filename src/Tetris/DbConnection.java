@@ -1,8 +1,7 @@
 package Tetris;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import javax.xml.transform.Result;
+import java.sql.*;
 
 public class DbConnection {
     public static Connection conn;
@@ -26,4 +25,55 @@ public class DbConnection {
             }
         }
     }
+
+    public static void saveHighestScore(int highestScore) {
+        if(isInDB(highestScore))
+            return;
+        connect();
+        String sql = "INSERT INTO highscores(id, score) VALUES (NULL, ?)";
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, highestScore);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+    public static int getRankingPosition(int score) {
+        connect();
+        String sql = "SELECT count(*) FROM highscores where score > "+score;
+        int position = 0;
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            if (result.next())
+                position =  result.getInt(1) + 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+        return position;
+    }
+
+    private static boolean isInDB(int score) {
+        connect();
+        String sql = "SELECT * FROM highscores where score = "+score;
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            if (result.next())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+        return false;
+    }
+
+
 }
