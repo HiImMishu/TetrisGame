@@ -27,7 +27,8 @@ public class GameManager {
         this.scoreSystem.setScoreView(scoreView);
         this.playBoard.setNextElementPanel(nextElementPanel);
         this.controlsView = new ControlsView(autoFall, playBoard);
-        this.menuPanel = new MenuPanel(playBoard, autoFall);
+        HighScoreView highScoreView = new HighScoreView();
+        this.menuPanel = new MenuPanel(playBoard, autoFall, highScoreView);
         this.gameOverView = new GameOverView(this, scoreSystem);
         menuPanel.setGameManager(this);
         window.setGlassPane(gameOverView);
@@ -43,9 +44,11 @@ public class GameManager {
         sidePanel.setBounds(300, 0, 200, 600);
         menuPanel.setBounds(0,0,500,600);
         gameOverView.setBounds(0, 0, 500, 600);
+        highScoreView.setBounds(0, 0, 500, 600);
         layeredPane.add(playBoard, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(sidePanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(menuPanel, JLayeredPane.POPUP_LAYER);
+        layeredPane.add(highScoreView, JLayeredPane.DRAG_LAYER);
         window.add(layeredPane);
 
         ToggleAction toggleMenu = new ToggleAction(menuPanel);

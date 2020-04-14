@@ -75,5 +75,26 @@ public class DbConnection {
         return false;
     }
 
+    public static int[] getTopRanging() {
+        connect();
+        int[] top = new int[10];
+
+        String sql = "SELECT score FROM highscores ORDER BY score DESC LIMIT 10";
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            int i = 0;
+            while(result.next()) {
+                top[i] = result.getInt(1);
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+        return top;
+    }
+
 
 }

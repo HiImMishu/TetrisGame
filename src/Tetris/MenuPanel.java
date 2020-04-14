@@ -11,7 +11,7 @@ public class MenuPanel extends JPanel {
     private PlayBoard playBoard;
     private GameManager gameManager;
 
-    MenuPanel(PlayBoard playBoard, AutoFall autoFall) {
+    MenuPanel(PlayBoard playBoard, AutoFall autoFall, HighScoreView highScoreView) {
         this.autoFall = autoFall;
         this.playBoard = playBoard;
 
@@ -33,6 +33,9 @@ public class MenuPanel extends JPanel {
         JButton highScores = new JButton("HIGH SCORES");
         highScores.setPreferredSize(new Dimension(180, 50));
         highScores.setFont(new Font("SansSerif", Font.ITALIC + Font.BOLD, 16));
+        highScores.addActionListener(event -> {
+            highScoreView.setVisible(true);
+        });
 
         JButton quit = new JButton("EXIT");
         quit.setPreferredSize(new Dimension(180, 50));
