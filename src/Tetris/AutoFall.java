@@ -5,25 +5,22 @@ import java.awt.event.ActionListener;
 
 public class AutoFall extends Thread {
     private int interval;
-    private int level;
     private boolean state;
     private Timer timer;
     private PlayBoard playBoard;
     private ScoreSystem scoreSystem;
     private int checkPoint = 5;
 
-    AutoFall(PlayBoard playBoard, ScoreSystem scoreSystem)
-    {
+    AutoFall(PlayBoard playBoard, ScoreSystem scoreSystem) {
         this.playBoard = playBoard;
         this.scoreSystem = scoreSystem;
         this.interval = 1000;
-        this.level = 0;
         this.state = false;
     }
 
     ActionListener listener = event -> {
-        if(state) {
-            if(scoreSystem.getLvl() >= checkPoint) {
+        if (state) {
+            if (scoreSystem.getLvl() >= checkPoint) {
                 checkPoint += 5;
                 if (interval > 100)
                     interval -= 50;
@@ -39,13 +36,11 @@ public class AutoFall extends Thread {
         timer.start();
     }
 
-    public void play()
-    {
+    public void play() {
         state = true;
     }
 
-    public void pause()
-    {
+    public void pause() {
         state = false;
     }
 

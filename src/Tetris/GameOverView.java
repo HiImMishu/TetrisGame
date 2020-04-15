@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.util.Objects;
 
 public class GameOverView  extends JComponent {
     private ScoreSystem scoreSystem;
@@ -33,7 +34,7 @@ public class GameOverView  extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(new Color(51,51,51,200));
         g2.fillRect(0,0,500,600);
-        Image gameOver = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\gameOver.png").getImage();
+        Image gameOver = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("gameOver.png"))).getImage();
         g2.drawImage(gameOver, 0, 0, null);
         g2.setColor(Color.WHITE);
         Font sasnBold28 = new Font("SansSerif", Font.ITALIC + Font.BOLD, 28);

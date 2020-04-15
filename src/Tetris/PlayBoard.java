@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PlayBoard extends JPanel {
     private static final int DEFAULT_WIDTH = 300;
@@ -50,7 +51,7 @@ public class PlayBoard extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        Image background = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\bg3.png").getImage();
+        Image background = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("bg3.png"))).getImage();
         g2.drawImage(background, 0, 0, null);
 
         for (Rectangle2D shape : current.getShape()) {
@@ -99,6 +100,7 @@ public class PlayBoard extends JPanel {
         if(!state) return;
         if (collisionWithDone(current)) {
             gameOver();
+            repaint();
             return;
         }
 
@@ -269,8 +271,11 @@ public class PlayBoard extends JPanel {
     }
 
     private void gameOver() {
-        gameManager.gameOver();
-        pause();
+        for(Rectangle2D r: done.get(done.size()-1).getShape())
+            if(r.getMinY() <= 0) {
+                gameManager.gameOver();
+                pause();
+            }
     }
 
     public void play() {

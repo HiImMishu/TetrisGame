@@ -2,6 +2,7 @@ package Tetris;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class MenuPanel extends JPanel {
     private int DEFAULT_WIDTH = 500;
@@ -53,7 +54,7 @@ public class MenuPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        Image background = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\menubg.png").getImage();
+        Image background = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("menubg.png"))).getImage();
         g2.drawImage(background, 0, 0, null);
     }
 

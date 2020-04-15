@@ -2,49 +2,42 @@ package Tetris;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class ControlsView extends JPanel {
     private static final int DEFAULT_WIDTH = 200;
     private static final int DEFAULT_HEIGHT = 200;
-    private JButton pause;
-    private JButton play;
-    private JButton restart;
-    private AutoFall autoFall;
-    private PlayBoard playBoard;
     private boolean active = true;
 
     ControlsView(AutoFall autoFall, PlayBoard playBoard) {
-        this.autoFall = autoFall;
-        this.playBoard = playBoard;
-
-        ImageIcon playIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\play.png");
+        ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("play.png")));
         Image playImg = playIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        this.play = new JButton(new ImageIcon(playImg));
-        play.setPreferredSize(new Dimension(55 ,55));
+        JButton play = new JButton(new ImageIcon(playImg));
+        play.setPreferredSize(new Dimension(55, 55));
         play.setMargin(new Insets(110, 110, 110, 110));
-        this.play.addActionListener(event -> {
+        play.addActionListener(event -> {
             if (active) {
                 autoFall.play();
                 playBoard.play();
             }
         });
 
-        ImageIcon pauseIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\pause.png");
+        ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("pause.png")));
         Image pauseImg = pauseIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        this.pause = new JButton(new ImageIcon(pauseImg));
-        pause.setPreferredSize(new Dimension(55 ,55));
-        this.pause.addActionListener(event -> {
+        JButton pause = new JButton(new ImageIcon(pauseImg));
+        pause.setPreferredSize(new Dimension(55, 55));
+        pause.addActionListener(event -> {
             if (active) {
                 autoFall.pause();
                 playBoard.pause();
             }
         });
 
-        ImageIcon restartIcon = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\restart.png");
+        ImageIcon restartIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("restart.png")));
         Image restartImage = restartIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        this.restart = new JButton(new ImageIcon(restartImage));
-        restart.setPreferredSize(new Dimension(55 ,55));
-        this.restart.addActionListener(event -> {
+        JButton restart = new JButton(new ImageIcon(restartImage));
+        restart.setPreferredSize(new Dimension(55, 55));
+        restart.addActionListener(event -> {
             if (active)
                 playBoard.reset();
         });
@@ -70,7 +63,7 @@ public class ControlsView extends JPanel {
         Graphics2D g = (Graphics2D) gn;
         setBackground(Color.DARK_GRAY);
 
-        Image background = new ImageIcon("C:\\Studia\\Sem4\\JiTP\\PROJEKT\\assets\\ar.png").getImage();
+        Image background = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("ar.png"))).getImage();
         g.drawImage(background, 0, 0, null);
     }
 

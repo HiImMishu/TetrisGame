@@ -2,7 +2,7 @@ package Tetris;
 
 import java.awt.*;
 
-public class test {
+public class Tetris {
     public static void main(String[] args)
     {
         EventQueue.invokeLater(() ->

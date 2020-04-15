@@ -1,13 +1,12 @@
 package Tetris;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 
 public class DbConnection {
     public static Connection conn;
 
     public static void connect() {
-        String databaseURL = "jdbc:mysql://localhost:3306/tetris?user=dev&password=ZAQ!2wsx";
+        String databaseURL = "jdbc:mysql://remotemysql.com/e6hO9brYMl?useSSL=false&user=e6hO9brYMl&password=35RRBBUkAH";
 
         try {
             conn = DriverManager.getConnection(databaseURL);
@@ -17,7 +16,7 @@ public class DbConnection {
     }
 
     public static void disconnect() {
-        if(conn != null) {
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -27,7 +26,7 @@ public class DbConnection {
     }
 
     public static void saveHighestScore(int highestScore) {
-        if(isInDB(highestScore))
+        if (isInDB(highestScore))
             return;
         connect();
         String sql = "INSERT INTO highscores(id, score) VALUES (NULL, ?)";
@@ -44,14 +43,14 @@ public class DbConnection {
 
     public static int getRankingPosition(int score) {
         connect();
-        String sql = "SELECT count(*) FROM highscores where score > "+score;
+        String sql = "SELECT count(*) FROM highscores where score > " + score;
         int position = 0;
 
         try {
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
             if (result.next())
-                position =  result.getInt(1) + 1;
+                position = result.getInt(1) + 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,7 +60,7 @@ public class DbConnection {
 
     private static boolean isInDB(int score) {
         connect();
-        String sql = "SELECT * FROM highscores where score = "+score;
+        String sql = "SELECT * FROM highscores where score = " + score;
 
         try {
             Statement statement = conn.createStatement();
@@ -85,7 +84,7 @@ public class DbConnection {
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
             int i = 0;
-            while(result.next()) {
+            while (result.next()) {
                 top[i] = result.getInt(1);
                 i++;
             }

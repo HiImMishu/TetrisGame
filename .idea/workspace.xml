@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="PROJEKT:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="4d880228-bf54-4a6e-9086-a48fc2569833" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PROJEKT_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PROJEKT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PROJEKT.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Bez nazwy-1.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tetris/AutoFall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/AutoFall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tetris/ControlsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/ControlsView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tetris/DbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/DbConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tetris/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tetris/GameOverView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/GameOverView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tetris/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/MenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tetris/PlayBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/PlayBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tetris/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tetris/Tetris.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +73,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/mysql-connector-java-5.1.48.jar!/" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
@@ -69,9 +83,9 @@
       <recent name="C:\Studia\Sem4\JiTP\PROJEKT\lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.test">
-    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Tetris.test" />
+  <component name="RunManager" selected="Application.Tetris">
+    <configuration name="Tetris" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Tetris.Tetris" />
       <module name="PROJEKT" />
       <extension name="coverage">
         <pattern>
@@ -89,7 +103,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.test" />
+        <item itemvalue="Application.Tetris" />
         <item itemvalue="JAR Application.mysql-connector-java-5.1.48.jar" />
       </list>
     </recent_temporary>
@@ -114,7 +128,7 @@
       <workItem from="1586362305205" duration="5653000" />
       <workItem from="1586428128673" duration="43000" />
       <workItem from="1586456851496" duration="3529000" />
-      <workItem from="1586461319206" duration="29215000" />
+      <workItem from="1586461319206" duration="36296000" />
     </task>
     <servers />
   </component>
@@ -143,6 +157,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="122" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586877930275" />
+    <state x="527" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586884848690">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="527" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586884848690" />
     <state x="599" y="123" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1586718031841">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -155,29 +173,29 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="614" y="136" key="FileChooserDialogImpl/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586718529473" />
-    <state width="1493" height="212" key="GridCell.Tab.0.bottom" timestamp="1586880581071">
+    <state width="1493" height="212" key="GridCell.Tab.0.bottom" timestamp="1586939822138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1476" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.84.1920.1040@-1920.84.1920.1040" timestamp="1586119212522" />
-    <state width="1493" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586880581071" />
+    <state width="1493" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586939822138" />
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585751324631" />
-    <state width="1493" height="212" key="GridCell.Tab.0.center" timestamp="1586880581071">
+    <state width="1493" height="212" key="GridCell.Tab.0.center" timestamp="1586939822138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1476" height="210" key="GridCell.Tab.0.center/0.0.1536.824/-1920.84.1920.1040@-1920.84.1920.1040" timestamp="1586119212521" />
-    <state width="1493" height="212" key="GridCell.Tab.0.center/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586880581071" />
+    <state width="1493" height="212" key="GridCell.Tab.0.center/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586939822138" />
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585751324631" />
-    <state width="1493" height="212" key="GridCell.Tab.0.left" timestamp="1586880581071">
+    <state width="1493" height="212" key="GridCell.Tab.0.left" timestamp="1586939822138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1476" height="210" key="GridCell.Tab.0.left/0.0.1536.824/-1920.84.1920.1040@-1920.84.1920.1040" timestamp="1586119212521" />
-    <state width="1493" height="212" key="GridCell.Tab.0.left/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586880581071" />
+    <state width="1493" height="212" key="GridCell.Tab.0.left/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586939822138" />
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585751324631" />
-    <state width="1493" height="212" key="GridCell.Tab.0.right" timestamp="1586880581071">
+    <state width="1493" height="212" key="GridCell.Tab.0.right" timestamp="1586939822138">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1476" height="210" key="GridCell.Tab.0.right/0.0.1536.824/-1920.84.1920.1040@-1920.84.1920.1040" timestamp="1586119212522" />
-    <state width="1493" height="212" key="GridCell.Tab.0.right/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586880581071" />
+    <state width="1493" height="212" key="GridCell.Tab.0.right/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586939822138" />
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585751324631" />
     <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1586878395260">
       <screen x="0" y="0" width="1536" height="824" />
@@ -199,10 +217,10 @@
     </state>
     <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586878395260" />
     <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1585669836381" />
-    <state x="277" y="0" key="SettingsEditor" timestamp="1586716525963">
+    <state x="277" y="0" key="SettingsEditor" timestamp="1586884853150">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="0" key="SettingsEditor/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586716525963" />
+    <state x="277" y="0" key="SettingsEditor/0.0.1536.824/-1920.84.1920.1040@0.0.1536.824" timestamp="1586884853150" />
     <state width="775" height="419" key="XDebugger.FullValuePopup" timestamp="1586270321258">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
