@@ -17,37 +17,37 @@ public class ScoreView extends JPanel {
     public void paintComponent(Graphics gn) {
         super.paintComponent(gn);
         Graphics2D g = (Graphics2D) gn;
-        setBackground(new Color(51,51,51));
+        setBackground(new Color(51, 51, 51));
         Font sasnBold26 = new Font("SansSerif", Font.BOLD, 26);
         Font sasnBold18 = new Font("SansSerif", Font.PLAIN, 18);
         Font sasnBold22 = new Font("SansSerif", Font.ITALIC + Font.BOLD, 22);
 
-        String level = "LEVEL "+scoreSystem.getLvl(), score = "SCORE", scr = ""+scoreSystem.getScore();
-        String highScore = "BEST SCORE", hsc = ""+scoreSystem.getHighScore();
+        String level = "LEVEL " + scoreSystem.getLvl(), score = "SCORE", scr = "" + scoreSystem.getScore();
+        String highScore = "BEST SCORE", hsc = "" + scoreSystem.getHighScore();
 
         FontRenderContext context = g.getFontRenderContext();
 
         Rectangle2D bounds = sasnBold26.getStringBounds(level, context);
         g.setFont(sasnBold26);
         g.setColor(new Color(255, 255, 255));
-        g.drawString(level,(int) (100-bounds.getWidth()/2),40);
+        g.drawString(level, (int) (100 - bounds.getWidth() / 2), 40);
 
         bounds = sasnBold18.getStringBounds(score, context);
         g.setFont(sasnBold18);
-        g.drawString(score,(int) (100-bounds.getWidth()/2),70);
+        g.drawString(score, (int) (100 - bounds.getWidth() / 2), 70);
 
         bounds = sasnBold18.getStringBounds(scr, context);
         g.setFont(sasnBold18);
-        g.drawString(scr,(int) (100-bounds.getWidth()/2),100);
+        g.drawString(scr, (int) (100 - bounds.getWidth() / 2), 100);
 
         bounds = sasnBold22.getStringBounds(highScore, context);
         g.setFont(sasnBold22);
         g.setColor(new Color(164, 0, 255));
-        g.drawString(highScore,(int) (100-bounds.getWidth()/2),140);
+        g.drawString(highScore, (int) (100 - bounds.getWidth() / 2), 140);
 
         bounds = sasnBold22.getStringBounds(hsc, context);
         g.setColor(new Color(194, 58, 148));
-        g.drawString(hsc,(int) (100-bounds.getWidth()/2),170);
+        g.drawString(hsc, (int) (100 - bounds.getWidth() / 2), 170);
 
     }
 

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.SimpleTimeZone;
 
 public class TetroShape extends JPanel {
     private static final Point[][][] shapeTemplate =
@@ -25,16 +26,16 @@ public class TetroShape extends JPanel {
                     },
                     // L Shape
                     {
-                            {new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(2, 2)},
-                            {new Point(1, 1), new Point(2, 1), new Point(3, 1), new Point(3, 0)},
-                            {new Point(2, 2), new Point(2, 1), new Point(2, 0), new Point(1, 0)},
+                            {new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(1, 2)},
+                            {new Point(0, 1), new Point(1, 1), new Point(2, 1), new Point(2, 0)},
+                            {new Point(0, 0), new Point(1, 0), new Point(1, 1), new Point(1, 2)},
                             {new Point(0, 0), new Point(0, 1), new Point(1, 0), new Point(2, 0)}
                     },
                     // S Shape
                     {
-                            {new Point(1, 0), new Point(1, 1), new Point(2, 1), new Point(2, 2)},
+                            {new Point(0, 0), new Point(0, 1), new Point(1, 1), new Point(1, 2)},
                             {new Point(0, 1), new Point(1, 1), new Point(1, 0), new Point(2, 0)},
-                            {new Point(1, 0), new Point(1, 1), new Point(2, 1), new Point(2, 2)},
+                            {new Point(0, 0), new Point(0, 1), new Point(1, 1), new Point(1, 2)},
                             {new Point(0, 1), new Point(1, 1), new Point(1, 0), new Point(2, 0)}
                     },
                     // Backward S Shape
@@ -91,6 +92,61 @@ public class TetroShape extends JPanel {
         int i = 0;
         double x = rectangles.getShape().get(0).getX();
         double y = rectangles.getShape().get(0).getY();
+        switch (family) {
+            case 1:
+                if (newRotate == 0) {
+                    x += SIZE;
+                    y -= SIZE;
+                }
+                if (newRotate == 1) {
+                    x -= SIZE;
+                }
+                if(newRotate == 3) {
+                    y -= SIZE;
+                }
+                break;
+            case 2:
+                if (newRotate == 0) {
+                    y -= SIZE;
+                    x += SIZE;
+                }
+                if (newRotate == 1) {
+                    x -= SIZE;
+                }
+                if(newRotate == 2) {
+                    y -= SIZE;
+                }
+                if (newRotate == 3) {
+                    y += SIZE;
+                }
+                break;
+            case 3:
+                if (newRotate == 0 || newRotate == 2) {
+                    y -= SIZE;
+                }
+                break;
+            case 4:
+                if (newRotate == 1 || newRotate == 3) {
+                    x -= SIZE;
+                }
+                break;
+            case 5:
+                if (newRotate == 0) {
+                    x -= SIZE;
+                }
+                if (newRotate == 1) {
+                    y -= SIZE;
+                }
+                if (newRotate == 2) {
+                    x -= SIZE;
+                    y += SIZE;
+                }
+                if (newRotate == 3) {
+                    x += SIZE;
+                    y -= SIZE;
+                }
+                break;
+        }
         for (Rectangle2D shape : rectangles.getShape()) {
             double newX = x + SIZE * shapeTemplate[family][newRotate][i].getX();
             double newY = y + SIZE * shapeTemplate[family][newRotate][i].getY();

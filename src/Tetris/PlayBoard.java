@@ -97,7 +97,7 @@ public class PlayBoard extends JPanel {
     }
 
     public void moveDown() {
-        if(!state) return;
+        if (!state) return;
         if (collisionWithDone(current)) {
             gameOver();
             repaint();
@@ -111,11 +111,10 @@ public class PlayBoard extends JPanel {
         }
         repaint();
         collision(current);
-        return;
     }
 
     private void moveLeft(ArrayList<Rectangle2D> r) {
-        if(!state) return;
+        if (!state) return;
         for (Rectangle2D shape : r) {
             if (shape.getMinX() <= 0)
                 return;
@@ -141,7 +140,7 @@ public class PlayBoard extends JPanel {
     }
 
     private void moveRight(ArrayList<Rectangle2D> r) {
-        if(!state) return;
+        if (!state) return;
         for (Rectangle2D shape : r) {
             if (shape.getMaxX() >= DEFAULT_WIDTH)
                 return;
@@ -167,7 +166,7 @@ public class PlayBoard extends JPanel {
     }
 
     private void rotate() {
-        if(!state) return;
+        if (!state) return;
         boolean collide = true;
         Element rotated = elementCreator.rotateShape(current.clone());
         for (Rectangle2D r : rotated.getShape()) {
@@ -253,7 +252,6 @@ public class PlayBoard extends JPanel {
         moveDoneDown(lvl);
         scoreSystem.setScore(100);
         checkRow();
-        return;
     }
 
     private void moveDoneDown(int lvl) {
@@ -267,12 +265,11 @@ public class PlayBoard extends JPanel {
             }
         }
         repaint();
-        return;
     }
 
     private void gameOver() {
-        for(Rectangle2D r: done.get(done.size()-1).getShape())
-            if(r.getMinY() <= 0) {
+        for (Rectangle2D r : done.get(done.size() - 1).getShape())
+            if (r.getMinY() <= 0) {
                 gameManager.gameOver();
                 pause();
             }

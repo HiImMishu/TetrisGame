@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(20, 0,20,0);
+        gbc.insets = new Insets(20, 0, 20, 0);
 
         JButton play = new JButton("PLAY");
         play.setPreferredSize(new Dimension(180, 50));
@@ -60,16 +60,15 @@ public class MenuPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(DEFAULT_WIDTH, DEFAULT_WIDTH);
+        return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     public void setMenuVisibility() {
         menuVisibility = !menuVisibility;
-        if(menuVisibility) {
+        if (menuVisibility) {
             autoFall.pause();
             playBoard.pause();
-        }
-        else {
+        } else {
             autoFall.play();
             playBoard.play();
         }

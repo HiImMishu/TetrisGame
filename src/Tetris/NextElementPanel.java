@@ -9,32 +9,27 @@ public class NextElementPanel extends JPanel {
     private static final int DEFAULT_HEIGHT = 200;
     private PlayBoard playBoard;
 
-    NextElementPanel(PlayBoard playBoard)
-    {
+    NextElementPanel(PlayBoard playBoard) {
         this.playBoard = playBoard;
         setOpaque(true);
     }
 
-    public void paintComponent(Graphics gn)
-    {
+    public void paintComponent(Graphics gn) {
         super.paintComponent(gn);
         Graphics2D g = (Graphics2D) gn;
-        setBackground(new Color(51,51,51));
+        setBackground(new Color(51, 51, 51));
 
         Element next = playBoard.getNext();
-        for(Rectangle2D r: next.getShape())
-        {
-            r.setRect(r.getMinX()-50, r.getMinY()+40, r.getWidth(), r.getHeight());
+        for (Rectangle2D r : next.getShape()) {
+            r.setRect(r.getMinX() - 50, r.getMinY() + 40, r.getWidth(), r.getHeight());
             g.setColor(next.getColor());
             g.fill(r);
             g.setColor(Color.BLACK);
             g.draw(r);
         }
-
     }
 
-    public Dimension getPreferredSize()
-    {
+    public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 }

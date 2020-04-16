@@ -4,24 +4,20 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class GameManager {
-    private Window window;
     private PlayBoard playBoard;
     private ScoreSystem scoreSystem;
-    private NextElementPanel nextElementPanel;
-    private ScoreView scoreView;
     private ControlsView controlsView;
     private AutoFall autoFall;
     private MenuPanel menuPanel;
     private GameOverView gameOverView;
     private boolean activeState = true;
 
-    GameManager()
-    {
-        this.window = new Window();
+    GameManager() {
+        Window window = new Window();
         this.scoreSystem = new ScoreSystem();
         this.playBoard = new PlayBoard(scoreSystem, this);
-        this.nextElementPanel = new NextElementPanel(playBoard);
-        this.scoreView = new ScoreView(scoreSystem);
+        NextElementPanel nextElementPanel = new NextElementPanel(playBoard);
+        ScoreView scoreView = new ScoreView(scoreSystem);
         this.autoFall = new AutoFall(playBoard, scoreSystem);
         autoFall.start();
         this.scoreSystem.setScoreView(scoreView);
@@ -40,9 +36,9 @@ public class GameManager {
         sidePanel.add(controlsView);
 
         JLayeredPane layeredPane = new JLayeredPane();
-        playBoard.setBounds(0,0,300, 600);
+        playBoard.setBounds(0, 0, 300, 600);
         sidePanel.setBounds(300, 0, 200, 600);
-        menuPanel.setBounds(0,0,500,600);
+        menuPanel.setBounds(0, 0, 500, 600);
         gameOverView.setBounds(0, 0, 500, 600);
         highScoreView.setBounds(0, 0, 500, 600);
         layeredPane.add(playBoard, JLayeredPane.DEFAULT_LAYER);
@@ -64,6 +60,7 @@ public class GameManager {
         ToggleAction(MenuPanel menuPanel) {
             this.menuPanel = menuPanel;
         }
+
         public void actionPerformed(ActionEvent event) {
             if (activeState)
                 menuPanel.setMenuVisibility();
