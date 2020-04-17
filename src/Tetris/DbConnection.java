@@ -15,7 +15,7 @@ public class DbConnection {
      * Metoda statyczna umozliwiajaca polaczenie sie z baza danych.
      */
     public static void connect() {
-        String databaseURL = "jdbc:mysql://remotemysql.com/e6hO9brYMl?useSSL=false&user=e6hO9brYMl&password=35RRBBUkAH";
+        String databaseURL = "jdbc:mysql://Serwer/User/Password";
 
         try {
             conn = DriverManager.getConnection(databaseURL);
