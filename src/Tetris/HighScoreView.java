@@ -5,7 +5,15 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Klasa tworzaca widok top 10 wynikow w rankingu.
+ */
 public class HighScoreView extends JPanel {
+    /**
+     * Konstruktor klasy HighScoreView
+     * Ustwia panel na niewidoczny.
+     * Dodaje przycisk pozwalajacy na powrot do menu.
+     */
     HighScoreView() {
         setBackground(new Color(51, 51, 51));
         setVisible(false);
@@ -26,6 +34,10 @@ public class HighScoreView extends JPanel {
         add(back, gbc);
     }
 
+    /**
+     * Metoda wyswietlajaca top 10 pozycji w rankingu.
+     * @param g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

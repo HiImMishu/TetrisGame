@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Klasa tworzaca Panel Main Menu
+ */
 public class MenuPanel extends JPanel {
     private int DEFAULT_WIDTH = 500;
     private int DEFAULT_HEIGHT = 600;
@@ -12,6 +15,13 @@ public class MenuPanel extends JPanel {
     private PlayBoard playBoard;
     private GameManager gameManager;
 
+    /**
+     * Konstruktor Klasy MenuPanel
+     * Tworzy trzy przyciski pozwalajace na interakcje z menu gry.
+     * @param playBoard plansza gry.
+     * @param autoFall Obiekt klasy umozliwiajacy autoopadanie elemenu.
+     * @param highScoreView Obiekt widoku rankingu wynikow.
+     */
     MenuPanel(PlayBoard playBoard, AutoFall autoFall, HighScoreView highScoreView) {
         this.autoFall = autoFall;
         this.playBoard = playBoard;
@@ -50,6 +60,10 @@ public class MenuPanel extends JPanel {
         add(quit, gbc);
     }
 
+    /**
+     * Wczytanie obrazu tla menu.
+     * @param g Obiekt klasy Graphic
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -58,11 +72,18 @@ public class MenuPanel extends JPanel {
         g2.drawImage(background, 0, 0, null);
     }
 
+    /**
+     * Zwraca preferowany rozmiar.
+     * @return Obiekt klasy Dimension.
+     */
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    /**
+     * Umozliwia wlaczenie / wylaczenie widocznosci menu.
+     */
     public void setMenuVisibility() {
         menuVisibility = !menuVisibility;
         if (menuVisibility) {
@@ -75,6 +96,10 @@ public class MenuPanel extends JPanel {
         setVisible(menuVisibility);
     }
 
+    /**
+     * Ustawia GameManager.
+     * @param gameManager obiekt klasy GameManager.
+     */
     public void setGameManager(GameManager gameManager) {
         this.gameManager = gameManager;
     }

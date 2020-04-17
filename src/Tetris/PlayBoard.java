@@ -7,6 +7,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Klasa umozliwiajaca poruszanie elementow, opadanie, obracanie.
+ * Panel zawierajacy przestrzen do gry.
+ */
 public class PlayBoard extends JPanel {
     private static final int DEFAULT_WIDTH = 300;
     private static final int DEFAULT_HEIGHT = 600;
@@ -22,6 +26,12 @@ public class PlayBoard extends JPanel {
     private NextElementPanel nextElementPanel;
     private GameManager gameManager;
 
+    /**
+     * Konstruktor klasy.
+     * Tworzy mape akcji oraz obiekt klasy InputMap pozwalajace na wywolywanie akcji za pomoca przyciskow klawiatury.
+     * @param scoreSystem
+     * @param gameManager
+     */
     PlayBoard(ScoreSystem scoreSystem, GameManager gameManager) {
         this.gameManager = gameManager;
         state = false;
@@ -48,6 +58,11 @@ public class PlayBoard extends JPanel {
         amap.put("move.round", rotate);
     }
 
+    /**
+     * Metoda rysująca wszytkie elementy statyczne oraz element aktualny.
+     * Ustawia obraz tla planszy.
+     * @param g Obiekt klasy Graphics
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -73,17 +88,32 @@ public class PlayBoard extends JPanel {
 
     }
 
+    /**
+     * Zwraca preferowany rozmiar panelu
+     * @return Obiekt klasy Dimension
+     */
     public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    /**
+     * Klasa wewnetrzna umozliwiajaca wywolanie metod poruszajacych lu  obracajacych element
+     */
     private class MoveAction extends AbstractAction {
         private String direction;
 
+        /**
+         * Kostruktor klasy
+         * @param direction Parametr informujacy ktora metode nalezy wywolac.
+         */
         MoveAction(String direction) {
             this.direction = direction;
         }
 
+        /**
+         * Wywolanie odpowiedniej metody w zaleznosci od parametru <code>direction</code>
+         * @param event
+         */
         public void actionPerformed(ActionEvent event) {
             if (direction.compareTo("DOWN") == 0)
                 moveDown();
@@ -96,6 +126,9 @@ public class PlayBoard extends JPanel {
         }
     }
 
+    /**
+     * Metoda umozliwiajaca poruszanie sie elementu do dolu.
+     */
     public void moveDown() {
         if (!state) return;
         if (collisionWithDone(current)) {
@@ -113,6 +146,10 @@ public class PlayBoard extends JPanel {
         collision(current);
     }
 
+    /**
+     * Metoda przesuwajaca element w lewo.
+     * @param r lista prymitywnych elementow ktore nalezy przesunac jako jeden element
+     */
     private void moveLeft(ArrayList<Rectangle2D> r) {
         if (!state) return;
         for (Rectangle2D shape : r) {
@@ -139,6 +176,10 @@ public class PlayBoard extends JPanel {
         repaint();
     }
 
+    /**
+     * Metoda umozliwiajaca przesuniecie elementu w prawo
+     * @param r Lista prymitywow elementow ktore nalezy przesunac jako jeden element
+     */
     private void moveRight(ArrayList<Rectangle2D> r) {
         if (!state) return;
         for (Rectangle2D shape : r) {
@@ -165,6 +206,9 @@ public class PlayBoard extends JPanel {
         repaint();
     }
 
+    /**
+     * Metoda umozliwiajaca obrot elementu jednokrotnie.
+     */
     private void rotate() {
         if (!state) return;
         boolean collide = true;
@@ -186,6 +230,10 @@ public class PlayBoard extends JPanel {
         repaint();
     }
 
+    /**
+     * Metoda sprawdzajaca czy element nie wchodzi w kolizje z granicami planszy.
+     * @param c
+     */
     private void collision(Element c) {
         for (Rectangle2D shape : c.getShape()) {
             if (shape.getMaxY() >= DEFAULT_HEIGHT) {
@@ -203,6 +251,11 @@ public class PlayBoard extends JPanel {
         collisionWithDone(c);
     }
 
+    /**
+     * Metoda sprawdzajaca czy element nei wchodzi w kolizje z pozostalymi elementami.
+     * @param c
+     * @return
+     */
     private Boolean collisionWithDone(Element c) {
         for (Rectangle2D shape : c.getShape()) {
             for (Element e : done) {
@@ -224,6 +277,9 @@ public class PlayBoard extends JPanel {
         return false;
     }
 
+    /**
+     * Metoda sprawdzajaca czy istnieje rzad calkowicie zzapelniony elementami.
+     */
     private void checkRow() {
         int[] elements = new int[(DEFAULT_HEIGHT / SIZE)];
         for (Element e : done) {
@@ -240,6 +296,10 @@ public class PlayBoard extends JPanel {
         }
     }
 
+    /**
+     * Metoda usuwajaca rzad zapelniony elementami.
+     * @param lvl Parametr okreslajacy ktory rzad nalezy usuac.
+     */
     private void removeRow(int lvl) {
         ArrayList<Rectangle2D> row = new ArrayList<>();
         for (Element e : done) {
@@ -254,6 +314,10 @@ public class PlayBoard extends JPanel {
         checkRow();
     }
 
+    /**
+     * Metoda przesuwajaca wszystkie elementy ponad usunietym rzedem do dolu.
+     * @param lvl wysokosc usunietego rzedu.
+     */
     private void moveDoneDown(int lvl) {
         for (Element e : done) {
             for (Rectangle2D d : e.getShape()) {
@@ -267,6 +331,9 @@ public class PlayBoard extends JPanel {
         repaint();
     }
 
+    /**
+     * Metoda konczaca aktualna rozgrywke po przegranej.
+     */
     private void gameOver() {
         for (Rectangle2D r : done.get(done.size() - 1).getShape())
             if (r.getMinY() <= 0) {
@@ -275,14 +342,23 @@ public class PlayBoard extends JPanel {
             }
     }
 
+    /**
+     * Metoda rozpoczynajaca / wznawiajaca rozgrywke.
+     */
     public void play() {
         state = true;
     }
 
+    /**
+     * Metoda konczaca rozgrywke.
+     */
     public void pause() {
         state = false;
     }
 
+    /**
+     * Metoda resetujaca rozgrywke.
+     */
     public void reset() {
         scoreSystem.reset();
         done.clear();
@@ -292,10 +368,18 @@ public class PlayBoard extends JPanel {
         repaint();
     }
 
+    /**
+     * Metoda zwracajaca nastepny element.
+     * @return
+     */
     public Element getNext() {
         return this.next.clone();
     }
 
+    /**
+     * Metoda umozliwiajaca ustawienie panelu z widokiem kolejnego elementu.
+     * @param nextElementPanel Obiekt klasy NextElementPanel
+     */
     public void setNextElementPanel(NextElementPanel nextElementPanel) {
         this.nextElementPanel = nextElementPanel;
     }

@@ -6,9 +6,17 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.util.Objects;
 
+/**
+ * Klasa tworzaca panel wyswietlany po przegraniu rozgrywki.
+ */
 public class GameOverView extends JComponent {
     private ScoreSystem scoreSystem;
 
+    /**
+     * Kontruktr klasy <code>GameOverView</code>
+     * @param gameManager Menager gry
+     * @param scoreSystem System wynikow gracza
+     */
     GameOverView(GameManager gameManager, ScoreSystem scoreSystem) {
         this.scoreSystem = scoreSystem;
 
@@ -28,6 +36,12 @@ public class GameOverView extends JComponent {
         add(menu, gbc);
     }
 
+    /**
+     * Metoda Ustawiajaca przezroczyste tlo
+     * Wyswietla informacje o pozycji gracza w rankingu.
+     * Wystwiela przycisk umozliwiajacy powrot do menu.
+     * @param g Obiekt klasy Graphics
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

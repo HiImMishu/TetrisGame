@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.SimpleTimeZone;
 
+/**
+ * Klasa umozliwiajaca utowrzenie elementu gry.
+ */
 public class TetroShape extends JPanel {
     private static final Point[][][] shapeTemplate =
             {
@@ -72,10 +75,10 @@ public class TetroShape extends JPanel {
             new Color(68, 0, 178)
     };
 
-    public int getElementSize() {
-        return SIZE;
-    }
-
+    /**
+     * Metoda zwracajaca randomowo utworzony element gry.
+     * @return element gry klasy Element.
+     */
     public Element getRandomShape() {
         var random = new Random();
         int shapeFamily = random.nextInt(7);
@@ -84,6 +87,11 @@ public class TetroShape extends JPanel {
         return e;
     }
 
+    /**
+     * Metoda umozliwiajaca obrot elementu.
+     * @param rectangles Element ktory nalezy obrocic.
+     * @return Obrocony element.
+     */
     public Element rotateShape(Element rectangles) {
         var family = rectangles.getShapeFamily();
         var rotate = rectangles.getRotateState();
@@ -156,6 +164,11 @@ public class TetroShape extends JPanel {
         return rectangles;
     }
 
+    /**
+     * Tworzy liste prymitywnych elementow klasy Rectangle2D wykorzystywana do budowania elementu gry.
+     * @param s
+     * @return
+     */
     public ArrayList<Rectangle2D> buildShape(Point[] s) {
         ArrayList<Rectangle2D> rectangles = new ArrayList<>();
         for (int i = 0; i < 4; i++) {

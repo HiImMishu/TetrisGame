@@ -3,6 +3,9 @@ package Tetris;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Klasa tworząca okno programu.
+ */
 public class Window extends JFrame {
     private static final int DEFAULT_WIDTH = 514;
     private static final int DEFAULT_HEIGHT = 637;

@@ -5,15 +5,26 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Klasa zarzadzajaca wyswietlaniem wynikow
+ */
 public class ScoreView extends JPanel {
     private static final int DEFAULT_WIDTH = 200;
     private static final int DEFAULT_HEIGHT = 200;
     private ScoreSystem scoreSystem;
 
+    /**
+     * Kontruktor klasy ScoreView
+     * @param scoreSystem Obiekt klasy ScoreSystem (systemu liczenia i zarzadzania wynikiem gracza)
+     */
     ScoreView(ScoreSystem scoreSystem) {
         this.scoreSystem = scoreSystem;
     }
 
+    /**
+     * Metoda rysujaca informacje o aktualnym oraz najwyzszym wyniku gracza.
+     * @param gn Obiekt klasy Graphics
+     */
     public void paintComponent(Graphics gn) {
         super.paintComponent(gn);
         Graphics2D g = (Graphics2D) gn;
@@ -51,6 +62,10 @@ public class ScoreView extends JPanel {
 
     }
 
+    /**
+     * Metoda zwracajaca preferowany rozmiar.
+     * @return Obiektk klasy Dimension.
+     */
     public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }

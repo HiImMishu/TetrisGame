@@ -4,11 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Klasa <code>ControlsView</code> tworzy przyciski do sterowania opadaniem elementu (play, pause, restart).
+ */
 public class ControlsView extends JPanel {
+    /**
+     * Standardowa szerokosc ustawiona na 200
+     */
     private static final int DEFAULT_WIDTH = 200;
+    /**
+     * Standardowa wysokosc ustawiona na 200
+     */
     private static final int DEFAULT_HEIGHT = 200;
     private boolean active = true;
 
+    /**
+     * Konctruktor tworzacy trzy przyciski sterujace rozgrywka.
+     * @param autoFall Obiekt Klasy <code>AutoFall</code>.
+     * @param playBoard Obiekt Klasy <code>PlayBoard</code>.
+     */
     ControlsView(AutoFall autoFall, PlayBoard playBoard) {
         ImageIcon playIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("play.png")));
         Image playImg = playIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -58,6 +72,10 @@ public class ControlsView extends JPanel {
         add(restart, constraints);
     }
 
+    /**
+     * Metoda ustawiajaca tlo panelu.
+     * @param gn
+     */
     public void paintComponent(Graphics gn) {
         super.paintComponent(gn);
         Graphics2D g = (Graphics2D) gn;
@@ -67,10 +85,18 @@ public class ControlsView extends JPanel {
         g.drawImage(background, 0, 0, null);
     }
 
+    /**
+     * Metoda zwracająca preferowany rozmiar Panelu.
+     * @return Obiekt klasy Dimension z preferowana wysokoscia i szerokoscia.
+     */
     public Dimension getPreferredSize() {
         return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
+    /**
+     * Metoda zmeiniająca stan przycisków. Aktywne / Nieaktywne.
+     * @param active Wartosc logiczna true / false.
+     */
     public void setActive(boolean active) {
         this.active = active;
     }

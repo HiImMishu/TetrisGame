@@ -3,6 +3,10 @@ package Tetris;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Klasa zawierajaca wszystkie potrzebne instancje wszystkich pozostalych klas, warstowwy panel zawierajacy menu oraz grę.
+ * Zawiera glassPanel zawierajacy panel wyswietlanu po przegraniu rozgrywki.
+ */
 public class GameManager {
     private PlayBoard playBoard;
     private ScoreSystem scoreSystem;
@@ -12,6 +16,9 @@ public class GameManager {
     private GameOverView gameOverView;
     private boolean activeState = true;
 
+    /**
+     * Konstuktor tworzacy niezbedne obiekty.
+     */
     GameManager() {
         Window window = new Window();
         this.scoreSystem = new ScoreSystem();
@@ -54,6 +61,9 @@ public class GameManager {
         amap.put("toggle.menu", toggleMenu);
     }
 
+    /**
+     * Klasa pozwalajaca na pokazanie / ukrycie panelu menu gry.
+     */
     private class ToggleAction extends AbstractAction {
         private MenuPanel menuPanel;
 
@@ -67,10 +77,20 @@ public class GameManager {
         }
     }
 
+    /**
+     * Metoda konczaca program.
+     */
     public void closeGame() {
         System.exit(0);
     }
 
+    /**
+     * Metoda wywolywana po przegraniu gry.
+     * Uwidacznia panel gameOverView.
+     * Dezaktywuje przyciski sterowania gra i menu.
+     * Zatrzymuje autoOpadanie.
+     * Zapisuje najwyzszy wynik do Bazy Danych.
+     */
     public void gameOver() {
         autoFall.pause();
         gameOverView.setVisible(true);
@@ -80,6 +100,12 @@ public class GameManager {
         DbConnection.saveHighestScore(scoreSystem.getHighScore());
     }
 
+    /**
+     * Resetuje rozgrywke po przegranej.
+     * Czysci plansze.
+     * Aktywuje menu.
+     * Aktywuje przyciski.
+     */
     public void resume() {
         activeState = true;
         menuPanel.setMenuVisibility();
